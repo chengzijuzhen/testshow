@@ -1,17 +1,67 @@
 <template>
   <div>
     <h3>登陆界面</h3>
-
-    <input type="text" placeholder="请输入用户名" v-model="username" />
-
-    <input type="password" placeholder="请输入密码" v-model="password" />
+    <!--表单属性绑定
+    使用v-model创建双向数据绑定, 用来监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。
+    -->
+    <input type="text" placeholder="请输入用户名" v-model="loginForm.username" />
+    <input type="password" placeholder="请输入密码" v-model="loginForm.password" />
     <button v-on:click="login">登录</button>
-
-   <p><router-link to="/home">首页</router-link></p> 
-    
+    <p><router-link to="/home">首页</router-link></p> 
 
   </div>
 </template>
+
+<script>
+  export default {
+    name: 'Login',
+    data () {
+      return {
+        loginForm: {
+          username: '',
+          password: ''
+        },
+        
+      }
+    },
+    //定义了登录按钮的点击方法，即向后端 /login 接口发送数据，获得成功的响应后，页面跳转到 /home
+    methods: {
+      login () {
+        console.log(this.loginForm.username)
+        console.log(this.loginForm.password)
+      this.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+        .then(data => {
+          console.log('请求结果', data)
+        })
+        this.$router.replace({path: '/home'})
+        // this.$axios
+        // //post 的异步请求，//这里一般请求后端的接口，接口返回一个json字符串
+        //   .post('/login', {
+        //     username: this.loginForm.username,
+        //     password: this.loginForm.password
+        //   })
+        //   .then(successResponse => {
+        //     if (successResponse.data.code === 200) {
+        //       //将请求返回的数据赋值给info
+        //       response => (this.info = response)
+        //       this.$router.replace({path: '/home'})
+        //     }
+        //   this.$message({
+        //       showClose: true,
+        //       message: successResponse.data.message,
+        //       type: 'success'
+        //     });
+        //   })         
+          .catch(failResponse => {// eslint-disable-line no-unused-vars
+            console.log(error);// eslint-disable-line no-unused-vars
+          })
+      }
+    }
+
+  
+  }
+</script>
+
 
 <style>
 .login-wrap {
