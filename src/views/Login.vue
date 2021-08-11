@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script>
+ <script>
   export default {
     name: 'Login',
     data () {
@@ -29,37 +29,82 @@
       login () {
         console.log(this.loginForm.username)
         console.log(this.loginForm.password)
-      this.$axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(data => {
-          console.log('请求结果', data)
-        })
-        this.$router.replace({path: '/home'})
-        // this.$axios
-        // //post 的异步请求，//这里一般请求后端的接口，接口返回一个json字符串
-        //   .post('/login', {
-        //     username: this.loginForm.username,
-        //     password: this.loginForm.password
-        //   })
-        //   .then(successResponse => {
-        //     if (successResponse.data.code === 200) {
-        //       //将请求返回的数据赋值给info
-        //       response => (this.info = response)
-        //       this.$router.replace({path: '/home'})
-        //     }
-        //   this.$message({
-        //       showClose: true,
-        //       message: successResponse.data.message,
-        //       type: 'success'
-        //     });
-        //   })         
+
+        if(this.loginForm.username.trim() === ''){
+        alert('用户名不能为空');
+        return 0;
+      }
+      if(this.loginForm.password.trim() === ''){
+        alert('密码不能为空');
+        return 0;
+      }
+       /**
+       * post 请求
+       */
+        this.$axios
+        //post 的异步请求，//这里一般请求后端的接口，接口返回一个json字符串
+          .post('/api/login', {
+            userName: this.loginForm.username,
+            password: this.loginForm.password
+          })
+          .then(successResponse => {
+            if (successResponse.data.code === 200) {
+              //将请求返回的数据赋值给info
+              response => (this.info = response)
+              this.$router.replace({path: '/home'})
+            }
+            
+          this.$message({
+              showClose: true,
+              message: successResponse.data.message,
+              type: 'success'
+            });
+          })         
           .catch(failResponse => {// eslint-disable-line no-unused-vars
-            console.log(error);// eslint-disable-line no-unused-vars
+            //console.log(error);// eslint-disable-line no-unused-vars
           })
       }
-    }
-
-  
+    } 
   }
+
+// export default {
+//     name: 'Login1',
+//     data () {
+//       return {
+//         loginForm: {
+//           username: '',
+//           password: ''
+//         },
+        
+//       }
+//     },
+//     //定义了登录按钮的点击方法，即向后端 /login 接口发送数据，获得成功的响应后，页面跳转到 /home
+//     methods: {
+//       login1 () {
+//         console.log(this.loginForm.username)
+//         console.log(this.loginForm.password)
+//       /**
+//        * get 请求
+//        */
+//       this.$axios.get('http://localhost:9091/api/login1?userName=admin&password=123456')
+//         .then(successResponse => {
+//             if (successResponse.data.code === 200) {
+//               //将请求返回的数据赋值给info
+//               response => (this.info = response)
+//               this.$router.replace({path: '/home'})
+//             }            
+//           this.$message({
+//               showClose: true,
+//               message: successResponse.data.message,
+//               type: 'success'
+//             });
+//           })         
+//           .catch(failResponse => {// eslint-disable-line no-unused-vars
+//             //console.log(error);// eslint-disable-line no-unused-vars
+//           })  
+//    }
+//  }
+// }
 </script>
 
 
