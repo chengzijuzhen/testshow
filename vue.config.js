@@ -18,6 +18,7 @@ module.exports = {
         open: true,
         /* 设置为0.0.0.0则所有的地址均能访问 */
         host: '0.0.0.0',
+        /* 端口号 */
         // port: 8090,
         https: false,
         hotOnly: false,
