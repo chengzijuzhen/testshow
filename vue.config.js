@@ -25,6 +25,7 @@ module.exports = {
         /* 使用代理 */
         proxy: {
             '/api': {
+                serverDomain:'http://localhost:8080',
                 /* 目标代理服务器地址 */
                 target: 'http://localhost:9091',
                 /* 允许跨域 */
